@@ -31,6 +31,11 @@ static bool is_interacting = false;
 
 #if defined (__unix__) || (defined (__APPLE__) && defined (__MACH__)) || defined (_WIN32)
 void sigint_handler(int signo) {
+#if defined (_WIN32)
+    // Windows: must reactivate sigint handler after each signal
+    signal(SIGINT, sigint_handler);
+#endif
+
     set_console_color(con_st, CONSOLE_COLOR_DEFAULT);
     printf("\n"); // this also force flush stdout.
     if (signo == SIGINT) {
@@ -396,11 +401,6 @@ int main(int argc, char ** argv) {
             if (n_past > 0 && is_interacting) {
                 // potentially set color to indicate we are taking user input
                 set_console_color(con_st, CONSOLE_COLOR_USER_INPUT);
-
-#if defined (_WIN32)
-                // Windows: must reactivate sigint handler after each signal
-                signal(SIGINT, sigint_handler);
-#endif
 
                 if (params.instruct) {
                     printf("\n> ");
