@@ -13,6 +13,8 @@ set(TARGET common)
 add_library(${TARGET} OBJECT
     common.h
     common.cpp
+    console.h
+    console.cpp
     )
 
 if (BUILD_SHARED_LIBS)
