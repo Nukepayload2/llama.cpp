@@ -13,6 +13,8 @@ set(TARGET common)
 add_library(${TARGET} OBJECT
     common.h
     common.cpp
+    grammar-parser.h
+    grammar-parser.cpp
     console.h
     console.cpp
     )
@@ -39,6 +41,9 @@ else()
     add_subdirectory(save-load-state)
     add_subdirectory(benchmark)
     add_subdirectory(baby-llama)
+    add_subdirectory(train-text-from-scratch)
+    add_subdirectory(simple)
+    add_subdirectory(embd-input)
     if (LLAMA_METAL)
         add_subdirectory(metal)
     endif()
